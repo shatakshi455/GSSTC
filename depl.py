@@ -3,7 +3,7 @@ import pickle
 import cv2
 import mediapipe as mp
 import numpy as np
-from streamlit_webrtc import webrtc_streamer, VideoTransformerBase
+from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
 
 def calculate_angle(v1, v2):
     v1 = np.array(v1)
@@ -38,7 +38,7 @@ st.write("Show an ASL hand sign to recognize it.")
 
 recognized_text = ""
 
-class VideoTransformer(VideoTransformerBase):
+class VideoProcessor(VideoProcessorBase):
     def __init__(self):
         self.previous_prediction = None
 
@@ -109,4 +109,4 @@ class VideoTransformer(VideoTransformerBase):
         st.write(f"Recognized Text: **{recognized_text}**")
         return img
 
-webrtc_streamer(key="asl-recognition", video_transformer_factory=VideoTransformer)
+webrtc_streamer(key="asl-recognition", video_processor_factory=VideoProcessor)
